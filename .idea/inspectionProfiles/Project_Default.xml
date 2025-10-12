@@ -1,0 +1,24 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="django-crispy-forms" />
+          <option value="crispy-bootstrap5" />
+          <option value="django-allauth" />
+          <option value="environs" />
+          <option value="pillow" />
+          <option value="django-debug-toolbar" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="mysite.polls.views.*" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

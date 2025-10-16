@@ -1,5 +1,18 @@
+<!-- templates/home.html -->
 {% extends "_base.html" %}
+
 {% block title %}Home{% endblock title %}
+
 {% block content %}
-    <h1>This is our home page. Here you will have access to all your favorite tools!</h1>
+  <h1>This is our home page.</h1>
+  {% if user.is_authenticated %}
+    <p>Hi {{ user.email }}!</p>
+    <!-- make sure you have the login log out redirects set in settings.py-->
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+  {% else %}
+    <p>You are not logged in</p>
+    <p>Please log in and experiance all this powerful tool has to offer.</p>
+    <a href="{% url 'login' %}">Log In</a>
+    <a href="{% url 'signup' %}">Sign Up</a>
+  {% endif %}
 {% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+{% block content %}
+  <h2>Available Exams</h2>
+
+  {% if exams %}
+    <ul>
+      {% for exam in exams %}
+        <li>
+          <a href="{% url 'exam_detail' exam.pk  %}">
+            {{ exam.job.title }} — {{ exam.get_season_display }} {{ exam.year }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No exams available for your assigned jobs.</p>
+  {% endif %}
+{% endblock content %}

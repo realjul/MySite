@@ -1,0 +1,20 @@
+{% extends "_base.html" %}
+{% block content %}
+
+<div class="container mt-4 text-white">
+  <h2>{{ exam.title }}</h2>
+  <p><strong>Job:</strong> {{ exam.job.title }}</p>
+  <p><strong>Season:</strong> {{ exam.get_season_display }} {{ exam.year }}</p>
+  {% if exam.description %}
+    <p><strong>Description:</strong> {{ exam.description }}</p>
+  {% endif %}
+  <p><strong>Passing Score:</strong> {{ exam.passing_score }}%</p>
+
+  <hr>
+
+  <a href="{% url 'server_exam' exam.pk %}" class="btn btn-primary">
+    Start Exam
+  </a>
+</div>
+
+{% endblock content %}

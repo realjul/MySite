@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from jobs.models import JobBase
+from jobs.models import JobBase, Profile
 
 
 # Create your models here.
@@ -47,3 +47,9 @@ class Choice(models.Model):
         return f"Choice for Q{self.question.id}: {self.text[:40]}"
 
 
+class ExamResult(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    score = models.FloatField()
+    passed = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(auto_now_add=True)

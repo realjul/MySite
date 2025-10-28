@@ -28,6 +28,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # custom user/profile app
     path("",include("accounts.urls")),
+    path("",include("training.urls")),
 ]
 
 if settings.DEBUG:

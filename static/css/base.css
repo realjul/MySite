@@ -1,5 +1,7 @@
 /* static/css/base.css */
 body {
+    background-color: black;
+    color: white; /* Optional: makes text visible */
     padding-top: 70px;
     min-height: 70rem;
     padding-top: 4.5rem;

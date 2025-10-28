@@ -1,0 +1,15 @@
+{% extends "_base.html" %}
+{% block content %}
+<div class="container mt-5 text-white">
+  <h2>{{ exam.title }} Results</h2>
+  <p>Your Score: <strong>{{ score }}%</strong></p>
+
+  {% if passed %}
+    <p class="text-success"><strong>✅ Congratulations! You passed.</strong></p>
+  {% else %}
+    <p class="text-danger"><strong>❌ Sorry, you didn’t pass. Please review and try again.</strong></p>
+  {% endif %}
+
+  <a href="{% url 'available_exams' %}" class="btn btn-secondary mt-3">Back to Exams</a>
+</div>
+{% endblock content %}

@@ -5,8 +5,8 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-  <h1>This is our home page.</h1>
-  <img class="bookcover" src="{% static 'images/Corralito.jpg' %}">
+  <h1>Welcome!</h1>
+  <img class="bookcover" src="{% static 'images/zbizz.png' %}">
   {% if user.is_authenticated %}
     <p>Hi {{ user.email }}!</p>
 

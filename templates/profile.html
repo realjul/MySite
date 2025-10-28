@@ -1,0 +1,20 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">My Profile</h1>
+{% if user.profile.image %}
+  <img src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+{% else %}
+  <img src="/media/default.jpg" alt="{{ user.username }}">
+{% endif %}
+    <h2>Welcome, {{user.username }}</h2>
+    <h3>You are the current {{ user.profile.primary_job.job.title }} of the {{ user.profile.location }} location.</h3>
+    <h4>Phone: {{user.profile.phone}}</h4>
+     <h4>Shirt Size: {{user.profile.shirt_size}}</h4>
+
+    <a href="{% url 'profile-edit' %}">Edit Profile</a>
+</div>
+
+{% endblock content %}

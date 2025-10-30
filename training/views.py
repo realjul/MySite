@@ -156,43 +156,75 @@ class UserExamDashboardView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         profile = self.request.user.profile
 
-        # Get the user's primary job
+        # Get user's primary job (if exists)
         primary_job = (
             EmployeeJob.objects.filter(profile=profile, is_primary=True)
             .select_related("job")
             .first()
         )
 
-        # If no primary job is found, show a message
+        # Handle case where user has no job yet
         if not primary_job:
-            context["error"] = "No primary job assigned. Please contact admin."
+            context.update({
+                "profile": profile,
+                "primary_job": None,
+                "error": "You have not been assigned a job yet. Please contact your manager.",
+                "exams": [],
+                "passed_exams": [],
+                "failed_exams": [],
+                "remaining_exams": [],
+                "total_exams": 0,
+                "taken_count": 0,
+                "passed_count": 0,
+                "failed_count": 0,
+                "remaining_count": 0,
+            })
             return context
 
         # All exams for this user's job
         exams = Exam.objects.filter(job=primary_job.job)
 
-        # Exams the user has taken
-        taken_results = ExamResult.objects.filter(profile=profile)
-        taken_exam_ids = taken_results.values_list('exam_id', flat=True)
+        # Get user's latest results (handle retakes)
+        latest_results = (
+            ExamResult.objects.filter(profile=profile)
+            .order_by('exam_id', '-submitted_at')
+        )
+        result_dict = {}
+        for r in latest_results:
+            result_dict.setdefault(r.exam_id, r)  # keep latest per exam
 
-        # Exams not yet taken
-        remaining_exams = exams.exclude(id__in=taken_exam_ids)
+        # Split exams by result type
+        taken_exams, passed_exams, failed_exams, remaining_exams = [], [], [], []
+
+        for exam in exams:
+            result = result_dict.get(exam.id)
+            if result:
+                taken_exams.append(exam)
+                if result.passed:
+                    passed_exams.append(exam)
+                else:
+                    failed_exams.append(exam)
+            else:
+                remaining_exams.append(exam)
 
         # Stats
         total_exams = exams.count()
-        taken_count = taken_results.count()
-        passed_count = taken_results.filter(passed=True).count()
-        remaining_count = remaining_exams.count()
+        taken_count = len(taken_exams)
+        passed_count = len(passed_exams)
+        failed_count = len(failed_exams)
+        remaining_count = len(remaining_exams)
 
         context.update({
             'profile': profile,
             'primary_job': primary_job.job,
             'exams': exams,
-            'taken_results': taken_results,
+            'passed_exams': passed_exams,
+            'failed_exams': failed_exams,
             'remaining_exams': remaining_exams,
             'total_exams': total_exams,
             'taken_count': taken_count,
             'passed_count': passed_count,
+            'failed_count': failed_count,
             'remaining_count': remaining_count,
         })
         return context

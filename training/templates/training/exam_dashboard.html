@@ -1,0 +1,35 @@
+{% extends "_base.html" %}
+{% block title %}Exam Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Exam Dashboard</h2>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Job</th>
+        <th>Exam</th>
+        <th>Season</th>
+        <th>Year</th>
+        <th>Total Takers</th>
+        <th>Passed</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for exam in exam_data %}
+        <tr>
+          <td>{{ exam.job }}</td>
+          <td>{{ exam.exam_title }}</td>
+          <td>{{ exam.season }}</td>
+          <td>{{ exam.year }}</td>
+          <td>{{ exam.total_takers }}</td>
+          <td>{{ exam.passed }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6" class="text-center">No exams available</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "_base.html" %}
+{% block title %}My Exam Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">Welcome, {{ profile.user.first_name|default:profile.user.username }}</h2>
+  <h5 class="text-muted">Job: {{ job.title }}</h5>
+
+  <div class="row mt-4">
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h6>Total Exams</h6>
+          <h2>{{ total_exams }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h6>Taken</h6>
+          <h2>{{ taken_count }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h6>Passed</h6>
+          <h2>{{ passed_count }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h6>Remaining</h6>
+          <h2>{{ remaining_count }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <h4>Exams You’ve Taken</h4>
+  <table class="table table-dark table-striped table-bordered align-middle">
+    <thead>
+      <tr>
+        <th>Exam</th>
+        <th>Score</th>
+        <th>Status</th>
+        <th>Date Taken</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in taken_results %}
+        <tr>
+          <td>{{ result.exam.title }} ({{ result.exam.get_season_display }} {{ result.exam.year }})</td>
+          <td>{{ result.score }}</td>
+          <td>
+            {% if result.passed %}
+              <span class="badge bg-success">Passed</span>
+            {% else %}
+              <span class="badge bg-danger">Failed</span>
+            {% endif %}
+          </td>
+          <td>{{ result.date_taken|date:"M d, Y" }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="text-center">You haven’t taken any exams yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h4 class="mt-5">Exams You Still Need to Take</h4>
+  <ul class="list-group">
+    {% for exam in remaining_exams %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ exam.title }} ({{ exam.get_season_display }} {{ exam.year }})
+        <a href="{% url 'exam_detail' exam.pk %}" class="btn btn-sm btn-primary">Take Exam</a>
+      </li>
+    {% empty %}
+      <li class="list-group-item text-center">You’re all caught up!</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

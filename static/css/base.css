@@ -1,22 +1,59 @@
+/* === Dark theme fixes for dashboard === */
+
+/* Cards */
 /* static/css/base.css */
 body {
     background-color: black;
-    color: white; /* Optional: makes text visible */
-    padding-top: 70px;
+    color: white;
+    padding-top: 6rem; /* Increase this to add space below navbar */
     min-height: 70rem;
-    padding-top: 4.5rem;
 }
-h1 {
-    color:red;
+
+.card {
+  background-color: #1a1a1a !important;  /* dark background */
+  color: #f1f1f1 !important;             /* light text */
+  border: 1px solid #333 !important;     /* subtle dark border */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
-.bookcover {
-    height: 300px;
-    width: auto;
+
+.card h6 {
+  color: #aaaaaa;
+  font-weight: 500;
+  margin-bottom: 8px;
 }
-.selfie {
-  width: 25px;
-  height: 25px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #ccc;
+
+.card h2 {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Tables */
+.table {
+  color: #f1f1f1 !important;
+  background-color: #1e1e1e !important;
+}
+
+.table th {
+  color: #fff !important;
+  background-color: #333 !important;
+  border-bottom: 2px solid #555 !important;
+}
+
+.table td, .table th {
+  border-color: #444 !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #2b2b2b !important;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: #242424 !important;
+}
+
+/* List groups (for "Exams You Still Need to Take") */
+.list-group-item {
+  background-color: #1a1a1a !important;
+  color: #f1f1f1 !important;
+  border-color: #333 !important;
 }

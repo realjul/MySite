@@ -5,7 +5,7 @@
 <div class="container mt-4">
     <h1 class="mb-4">My Profile</h1>
 {% if user.profile.image %}
-  <img src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+  <img src="{{ user.profile.image.url }}" alt="{{ user.username }}" class="profile-pic">
 {% else %}
   <img src="/media/default.jpg" alt="{{ user.username }}">
 {% endif %}

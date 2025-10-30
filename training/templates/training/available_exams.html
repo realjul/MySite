@@ -1,18 +1,55 @@
 {% extends "_base.html" %}
+{% block title %}Available Exams{% endblock %}
+
 {% block content %}
-  <h2>Available Exams</h2>
+<div class="container mt-4">
+  <h2 class="mb-3">Available Exams</h2>
 
   {% if exams %}
-    <ul>
+  <table class="table table-dark table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Exam</th>
+        <th>Job</th>
+        <th>Season</th>
+        <th>Year</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for exam in exams %}
-        <li>
-          <a href="{% url 'exam_detail' exam.pk  %}">
-            {{ exam.job.title }} — {{ exam.get_season_display }} {{ exam.year }}
-          </a>
-        </li>
+      <tr>
+        <td>{{ exam.title }}</td>
+        <td>{{ exam.job.title }}</td>
+        <td>{{ exam.get_season_display }}</td>
+        <td>{{ exam.year }}</td>
+        <td>
+          {% if exam.has_taken %}
+            {% if exam.passed %}
+              <span class="badge bg-success">Passed</span>
+            {% else %}
+              <span class="badge bg-danger">Failed</span>
+              <div class="mt-2 small text-muted">
+                <strong>Score:</strong> {{ exam.score }}%<br>
+                <strong>Last Attempt:</strong> {{ exam.last_attempt|date:"M d, Y" }}
+              </div>
+              <a href="{% url 'exam_detail' exam.pk %}" class="btn btn-sm btn-warning mt-2">
+                Retake Exam
+              </a>
+            {% endif %}
+          {% else %}
+            <span class="badge bg-secondary">Not Attempted</span>
+            <a href="{% url 'exam_detail' exam.pk %}" class="btn btn-sm btn-primary ms-2">
+              Take Exam
+            </a>
+          {% endif %}
+        </td>
+      </tr>
       {% endfor %}
-    </ul>
+    </tbody>
+  </table>
   {% else %}
-    <p>No exams available for your assigned jobs.</p>
+    <p>No available exams at this time.</p>
   {% endif %}
-{% endblock content %}
+</div>
+{% endblock %}

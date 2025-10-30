@@ -16,13 +16,49 @@ class AvailableExamView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if not hasattr(user, 'profile'):
+        profile = getattr(user, 'profile', None)
+        if not profile:
             return Exam.objects.none()
 
         # Get all jobs tied to this user
-        employee_jobs = user.profile.employee_jobs.values_list('job', flat=True)
-        return Exam.objects.filter(job__in=employee_jobs).distinct()
+        job_ids = profile.employee_jobs.values_list('job_id', flat=True)
 
+        # All exams for those jobs
+        exams = Exam.objects.filter(job_id__in=job_ids).distinct()
+
+        # Identify passed exams (to exclude them)
+        passed_exam_ids = ExamResult.objects.filter(
+            profile=profile, passed=True
+        ).values_list('exam_id', flat=True)
+
+        # Exams not yet passed (either failed or not taken)
+        available_exams = exams.exclude(id__in=passed_exam_ids)
+
+        # Get user's latest attempt for each exam
+        results = (
+            ExamResult.objects.filter(profile=profile)
+            .order_by('exam_id', '-submitted_at')
+        )
+        result_dict = {}
+        for r in results:
+            result_dict.setdefault(r.exam_id, r)  # keep only the latest result per exam
+
+        for exam in available_exams:
+            result = result_dict.get(exam.id)
+            if result:
+                exam.has_taken = True
+                exam.passed = result.passed
+                exam.score = result.score
+                exam.last_attempt = result.submitted_at
+                exam.can_retake = not result.passed
+            else:
+                exam.has_taken = False
+                exam.passed = None
+                exam.score = None
+                exam.last_attempt = None
+                exam.can_retake = True
+
+        return available_exams
 
 # -------------------------------
 # Detail view (Exam information)
@@ -35,8 +71,8 @@ class ExamDetailView(LoginRequiredMixin, DetailView):
 # -------------------------------
 # Actual exam form / submission
 # -------------------------------
-class ServerExamView(LoginRequiredMixin, View):
-    template_name = "training/server_exam_form.html"
+class ExamView(LoginRequiredMixin, View):
+    template_name = "training/exam_form.html"
 
     def get(self, request, pk):
         exam = get_object_or_404(Exam, pk=pk)

@@ -3,6 +3,8 @@
 /* Cards */
 /* static/css/base.css */
 /* === Dark theme form fields === */
+@import "tailwindcss"
+
 input[type="text"],
 input[type="email"],
 input[type="password"],

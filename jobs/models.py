@@ -23,6 +23,8 @@ class EmployeeJob(models.Model):
     start_date = models.DateField(auto_now_add=True)
     is_primary = models.BooleanField(default=False)
 
+    pay_rate = models.FloatField(max_length=6, default=0, null=True, blank=True)
+
     class Meta:
         unique_together = ('profile', 'job')
 

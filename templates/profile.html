@@ -3,7 +3,7 @@
 
 {% block content %}
 <div align="center" class="container mt-4">
-    <h1 class="mb-4">My Profile</h1>
+    <h1 class="mt-4">My Profile</h1>
 {% if user.profile.image %}
   <img src="{{ user.profile.image.url }}" alt="{{ user.username }}" class="profile-pic">
 {% else %}
@@ -16,8 +16,8 @@
     <p>Emergency Contact: {{user.profile.emergency_contact}}</p>
     <p>Emergency Contact Phone: {{user.profile.emergency_contact_number}}</p>
     <p>Start date: {{user.profile.start_date}}</p>
-    <a href="{% url 'upload_pdfs' %}" target="_blank">Up Load PDF</a>
-    <a href="{% url 'profile-edit' %}">Edit Profile</a>
+    <p><a href="{% url 'upload_pdfs' %}" target="_blank">Up Load PDF</a></p>
+    <p><a href="{% url 'profile-edit' %}">Edit Profile</a></p>
 </div>
 
 {% endblock content %}

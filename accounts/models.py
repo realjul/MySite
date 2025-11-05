@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.utils import timezone
 # Create your models here.
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
@@ -28,8 +29,11 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile")
     phone = models.CharField(max_length=10,default="0000000000")
     image = models.ImageField(upload_to="covers/", blank=True, null=True, default=None)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="location")
-    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="profile")
+    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="location")
+    emergency_contact = models.TextField(max_length=20,blank=True)
+    emergency_contact_number = models.CharField(max_length=20,blank=True)
+    start_date = models.DateField(default=timezone.now)
+    is_primary = models.BooleanField(default=False)
     shirt_size = models.CharField(max_length=15,
                                   choices=SHIRT_SIZES,
                                   blank=True,
@@ -41,3 +45,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s"
+
+class ProfilePDF(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile_pdf",null=True)
+    title = models.CharField(max_length=100)
+    file = models.FileField(upload_to="profile_pdf/", blank=True, null=True, default=None)
+    uploaded_at = models.DateTimeField(default=timezone.now,blank=True)
+
+    def __str__(self):
+        return f"{self.title} ({self.user.username})"

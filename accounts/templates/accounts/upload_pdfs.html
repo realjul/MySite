@@ -1,0 +1,26 @@
+<!-- templates/accounts/upload_pdfs.html -->
+{% extends "_base.html" %}
+{% block content %}
+<div class="container text-center">
+  <h2>Upload Your PDFs</h2>
+
+  <form method="post" enctype="multipart/form-data" class="mt-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+
+  <hr>
+  <h3>Your Uploaded Files</h3>
+  <ul>
+    {% for pdf in pdfs %}
+      <li>
+        <a href="{{ pdf.file.url }}" target="_blank">{{ pdf.title }}</a>
+        <span class="text-muted">(uploaded {{ pdf.uploaded_at|date:"M d, Y" }})</span>
+      </li>
+    {% empty %}
+      <p>No files uploaded yet.</p>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

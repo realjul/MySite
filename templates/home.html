@@ -5,10 +5,11 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
+<div align="center">
   <h1>Welcome!</h1>
-  <img class="bookcover" src="{% static 'images/ZeroPoint.png' %}">
+  <img class="zeropoint-logo" src="{% static 'images/ZeroPoint.png' %}">
   {% if user.is_authenticated %}
-    <p>Hi {{ user.email }}!</p>
-
+    <h2>Hi {{ user.username }}!</h2>
+</div>
   {% endif %}
 {% endblock content %}

@@ -15,7 +15,7 @@ services:
 
   web:
     build: .
-    command: python /code/manage.py runserver 0.0.0.0:8000
+    command: sh -c "sleep 5 && python /code/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
@@ -26,7 +26,7 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_HOST: db   #  This is the critical line
+      POSTGRES_HOST: db
       POSTGRES_PORT: 5432
 
 volumes:

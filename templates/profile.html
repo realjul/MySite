@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-4">
+<div align="center" class="container mt-4">
     <h1 class="mb-4">My Profile</h1>
 {% if user.profile.image %}
   <img src="{{ user.profile.image.url }}" alt="{{ user.username }}" class="profile-pic">
@@ -10,10 +10,13 @@
   <img src="/media/default.jpg" alt="{{ user.username }}">
 {% endif %}
     <h2>Welcome, {{user.username }}</h2>
-    <h3>You are the current {{ user.profile.primary_job.job.title }} of the {{ user.profile.location }} location.</h3>
-    <h4>Phone: {{user.profile.phone}}</h4>
-     <h4>Shirt Size: {{user.profile.shirt_size}}</h4>
-
+    <p>You are the current {{ user.profile.primary_job.job.title }} of the {{ user.profile.location }} location.</p>
+    <p>Phone: {{user.profile.phone}}</p>
+    <p>Shirt Size: {{user.profile.shirt_size}}</p>
+    <p>Emergency Contact: {{user.profile.emergency_contact}}</p>
+    <p>Emergency Contact Phone: {{user.profile.emergency_contact_number}}</p>
+    <p>Start date: {{user.profile.start_date}}</p>
+    <a href="{% url 'upload_pdfs' %}" target="_blank">Up Load PDF</a>
     <a href="{% url 'profile-edit' %}">Edit Profile</a>
 </div>
 

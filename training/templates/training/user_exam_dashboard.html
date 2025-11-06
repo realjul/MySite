@@ -30,7 +30,7 @@
           <a href="{% url 'exam_detail' exam.pk %}" class="btn btn-sm btn-warning">Retake</a>
         </li>
       {% empty %}
-        <li class="list-group-item text-center text-muted">No failed exams 🎉</li>
+        <li class="list-group-item text-center text-muted">No failed exams </li>
       {% endfor %}
     </ul>
 
@@ -42,7 +42,7 @@
           <a href="{% url 'exam_detail' exam.pk %}" class="btn btn-sm btn-primary">Take Exam</a>
         </li>
       {% empty %}
-        <li class="list-group-item text-center text-muted">All exams completed ✅</li>
+        <li class="list-group-item text-center text-muted">All exams completed</li>
       {% endfor %}
     </ul>
   {% endif %}

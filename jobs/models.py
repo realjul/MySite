@@ -6,8 +6,16 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 # Create your models here.
 # ---- Base jobs class -----
 class JobBase(models.Model):
+    DEPARTMENTS = (
+        ('Management', 'Management'),
+        ('FOH', 'Front of House'),
+        ('BOH', 'Back of House'),
+        ('Maintenance', 'Maintenance')
+
+    )
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True,null=True)
+    department = models.CharField(choices=DEPARTMENTS,null=True,max_length=15)
 
     def __str__(self):
         return self.title

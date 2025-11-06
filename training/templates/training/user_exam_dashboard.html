@@ -11,7 +11,7 @@
     </div>
     <p class="text-muted">Once your manager assigns you a job, your required exams will appear here.</p>
   {% else %}
-    <h5 class="text-muted">Job: {{ primary_job.title }}</h5>
+    <h5>Job: {{ primary_job.title }}</h5>
 
     <div class="row mt-4 text-center">
       <div class="col-md-3"><div class="card"><div class="card-body"><h6>Total Exams</h6><h2>{{ total_exams }}</h2></div></div></div>
@@ -30,7 +30,7 @@
           <a href="{% url 'exam_detail' exam.pk %}" class="btn btn-sm btn-warning">Retake</a>
         </li>
       {% empty %}
-        <li class="list-group-item text-center text-muted">No failed exams 🎉</li>
+        <li class="list-group-item text-center text-muted">No failed exams </li>
       {% endfor %}
     </ul>
 

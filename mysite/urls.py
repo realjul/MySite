@@ -29,6 +29,7 @@ urlpatterns = [
     # custom user/profile app
     path("",include("accounts.urls")),
     path("",include("training.urls")),
+    path("",include("jobs.urls")),
 ]
 
 if settings.DEBUG:

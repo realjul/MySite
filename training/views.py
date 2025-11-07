@@ -88,24 +88,42 @@ class ExamView(LoginRequiredMixin, View):
         questions = exam.questions.prefetch_related('choices')
 
         total = questions.count()
+        if total == 0:
+            # Prevent division by zero if exam has no questions
+            return render(request, "training/exam_result.html", {
+                "exam": exam,
+                "score": 0,
+                "passed": False,
+                "error": "This exam has no questions configured."
+            })
+
         correct = 0
+        answers_data = []  # (Optional) track answers if needed later
 
         for question in questions:
             selected_choice_id = request.POST.get(f"question_{question.id}")
             if not selected_choice_id:
                 continue  # skipped question
-            try:
-                selected_choice = Choice.objects.get(id=selected_choice_id)
-                if selected_choice.is_correct:
-                    correct += 1
-            except Choice.DoesNotExist:
-                continue
+
+            # Simplified and safer choice lookup
+            selected_choice = get_object_or_404(Choice, id=selected_choice_id)
+
+            is_correct = selected_choice.is_correct
+            if is_correct:
+                correct += 1
+
+            # Optional: record answer data for analytics/review (Improvement #3)
+            answers_data.append({
+                "question": question,
+                "selected_choice": selected_choice,
+                "is_correct": is_correct
+            })
 
         percentage = round((correct / total) * 100, 2)
         passed = percentage >= exam.passing_score
 
-        # Save result
-        ExamResult.objects.create(
+        # Save main exam result
+        result = ExamResult.objects.create(
             profile=request.user.profile,
             exam=exam,
             score=percentage,
@@ -117,6 +135,7 @@ class ExamView(LoginRequiredMixin, View):
             "score": percentage,
             "passed": passed
         })
+
 
 class ExamDashboardView(TemplateView):
     template_name = 'training/exam_dashboard.html'

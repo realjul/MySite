@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse, resolve
 from accounts.models import Profile
+from django.utils import timezone
 
 from .forms import CustomUserCreationForm
 from .views import SignupPageView

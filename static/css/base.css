@@ -13,7 +13,7 @@ input[type="date"],
 textarea,
 select {
   background-color: #1e1e1e !important;  /* match dashboard tone */
-  color: #ffffff !important;
+  color: #fff !important;
   border: 1px solid #444 !important;
   border-radius: 4px;
   padding: 0.5rem 0.75rem;
@@ -21,7 +21,7 @@ select {
 
 input::placeholder,
 textarea::placeholder {
-  color: #aaaaaa !important;
+  color: #cccccc !important;
 }
 
 input:focus,
@@ -166,4 +166,27 @@ body {
   border: 3px solid #444;   /* subtle border for dark theme */
   box-shadow: 0 0 6px rgba(0,0,0,0.6);
   margin-bottom: 1rem;      /* space below image */
+}
+/* Crispy Bootstrap uses .form-control */
+.form-control {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+  border: 1px solid #444 !important;
+}
+
+/* Fix placeholder color */
+.form-control:placeholder {
+  color: #aaaaaa !important;
+}
+
+/* Make labels white */
+.form-label,
+label {
+  color: #f1f1f1 !important;
+}
+
+/* Fix help text */
+.form-text,
+small {
+  color: #aaaaaa !important;
 }

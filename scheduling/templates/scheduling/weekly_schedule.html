@@ -1,0 +1,39 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container text-white">
+
+    <h1 class="text-center mb-4">
+        Date
+    </h1>
+
+    <!-- Repeat for each location -->
+        <table class="table table-bordered text-white my-5">
+            <thead>
+                <tr>
+                    <th colspan="4" class="text-center fs-3">
+                       Location
+                    </th>
+                </tr>
+                <tr>
+                    <th>Section</th>
+                    <th>Name</th>
+                    <th>In</th>
+                    <th>Out</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                    <tr>
+                        <td> Section Number </td>
+                            <td>Employee Name</td>
+                            <td>Start Time</td>
+                            <td>End Time</td>
+                    </tr>
+            </tbody>
+        </table>
+
+
+</div>
+{% endblock %}

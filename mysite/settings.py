@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "pages.apps.PagesConfig",
     "jobs.apps.JobsConfig",
     "training.apps.TrainingConfig",
+    "scheduling.apps.SchedulingConfig",
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"

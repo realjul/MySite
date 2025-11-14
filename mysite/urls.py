@@ -30,6 +30,7 @@ urlpatterns = [
     path("",include("accounts.urls")),
     path("",include("training.urls")),
     path("",include("jobs.urls")),
+    path("",include("scheduling.urls")),
 ]
 
 if settings.DEBUG:
